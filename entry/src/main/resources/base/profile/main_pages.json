@@ -1,6 +1,7 @@
 {
   "src": [
     "pages/StackDemo",
-    "pages/ForEachCase"
+    "pages/ForEachCase",
+    "pages/ZhiHu"
   ]
 }

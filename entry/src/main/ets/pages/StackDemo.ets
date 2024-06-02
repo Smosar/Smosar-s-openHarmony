@@ -139,7 +139,6 @@ struct StackDemo {
 
                     // 点赞部分
                     LikeCom({ goods, changeLike: (goods: GoodsItem) => this.changeLike(goods) })
-
                   }
                   .width('100%')
                   .justifyContent(FlexAlign.SpaceBetween)
