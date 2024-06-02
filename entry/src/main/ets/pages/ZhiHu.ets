@@ -82,43 +82,49 @@ struct ZhiHu {
     this.commentList.splice(index, 0, item)
   }
 
+  // 将一条新的评论添加到 整个数组 的最前面
+  addComment(item: ReplyItem) {
+    this.commentList.unshift(item)
+  }
+
   build() {
-   Stack({alignContent:Alignment.Bottom}){
-     Scroll() {
-       Column() {
-         // 顶部组件
-         // HmNavBar()
-         // 评论组件
-         CommentItem({
-           item: {
-             id: 1,
-             avatar: $r('app.media.application'),
-             author: '周杰伦',
-             content: '意大利拌面应该使用42号钢筋混凝土再加上量子力学缠绕最后通过不畏浮云遮望眼',
-             time: '11-30',
-             area: '海南',
-             likeNum: 100
-           }
-         })
-         // 分割线
-         Divider()
-           .strokeWidth(6)
-           .color("#f4f5f6")
-         ForEach(this.commentList, (item: ReplyItem) => {
-           CommentItem({ item, changeLike: item => {
-             this.changeLike(item)
-           }})
-         })
-       }
-       .width('100%')
-       .backgroundColor(Color.White)
+    Stack({ alignContent: Alignment.Bottom }) {
+      Scroll() {
+        Column() {
+          // 顶部组件
+          // HmNavBar()
+          // 评论组件
+          CommentItem({
+            item: {
+              id: 1,
+              avatar: $r('app.media.application'),
+              author: '周杰伦',
+              content: '意大利拌面应该使用42号钢筋混凝土再加上量子力学缠绕最后通过不畏浮云遮望眼',
+              time: '11-30',
+              area: '海南',
+              likeNum: 100
+            }
+          })
+          // 分割线
+          Divider()
+            .strokeWidth(6)
+            .color("#f4f5f6")
+          ForEach(this.commentList, (item: ReplyItem) => {
+            CommentItem({ item, changeLike: item => {
+              this.changeLike(item)
+            } })
+          })
+        }
+        .width('100%')
+        .backgroundColor(Color.White)
+      }.padding({
+        bottom: 60
+      })
 
-
-     }.padding({
-       bottom: 60
-     })
-     ReplyInput()
-   }
+      ReplyInput({ addComment: (item: ReplyItem) => {
+        this.addComment(item)
+      } })
+    }
   }
 }
 
@@ -183,15 +189,37 @@ struct CommentItem {
 // 回复评论组件
 @Component
 struct ReplyInput {
+  @State commentStr: string = ''
+  addComment: (item: ReplyItem) => void = () => {
+  }
+
   build() {
     Row() {
-      TextInput({ placeholder: '回复～'})
+      TextInput({ placeholder: '回复～', text: this.commentStr })
         .layoutWeight(1)
         .backgroundColor("#f4f5f6")
+        .onChange((value) => {
+          this.commentStr = value
+        })
       Text("发布")
         .fontColor("#6ecff0")
         .margin({
           left: 10
+        })
+        .onClick(() => {
+          console.info('输入框信息', this.commentStr)
+          if(this.commentStr){
+            this.addComment({
+              id: Date.now(),
+              avatar: "",
+              author: "Smosar",
+              content: this.commentStr,
+              time: `${new Date().getMonth() + 1 }-${new Date().getDate()}`,
+              area: "",
+              likeNum: 111
+            })
+          }
+          this.commentStr = ''
         })
     }
     .border({
