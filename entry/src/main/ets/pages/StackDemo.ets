@@ -1,23 +1,23 @@
 // 商品类型
-import ReplayInput from '../components/ReplayInput'
-
-class GoodsItem1 {
+class GoodsItem {
   goods_name: string
   goods_price: number
   goods_img: string
   goods_count: number
   id: number
+  likes?: number
+  likeFlag?: boolean
 }
 
 @Entry
 @Component
-struct ForEachCase {
+struct StackDemo {
   // 两种定义类型的方式
   // @State list:GoodsItem[] = []
   // @State list: Array<GoodsItem> = []
   // TS 方法，Partial 后面跟泛型，表示所有属性都不是必传的
   // @State li:Partial<GoodsItem> = {}
-  @State list: Array<GoodsItem1> = [
+  @State list: Array<GoodsItem> = [
     {
       "id": 1,
       "goods_name": "班俏BANQIAO超火ins潮卫衣女士2020秋季新款韩版宽松慵懒风薄款外套带帽上衣",
@@ -31,6 +31,7 @@ struct ForEachCase {
       "goods_img": "assets/2.webp",
       "goods_price": 129,
       "goods_count": 1,
+      "likes": 100
     },
     {
       "id": 3,
@@ -38,6 +39,7 @@ struct ForEachCase {
       "goods_img": "assets/3.webp",
       "goods_price": 198,
       "goods_count": 1,
+      "likes": 32
     },
     {
       "id": 4,
@@ -45,6 +47,7 @@ struct ForEachCase {
       "goods_img": "assets/4.webp",
       "goods_price": 99,
       "goods_count": 1,
+      "likes": 539
     },
     {
       "id": 5,
@@ -52,6 +55,7 @@ struct ForEachCase {
       "goods_img": "assets/5.webp",
       "goods_price": 156,
       "goods_count": 1,
+      "likes": 862
     },
     {
       "id": 6,
@@ -59,6 +63,7 @@ struct ForEachCase {
       "goods_img": "assets/6.webp",
       "goods_price": 142.8,
       "goods_count": 1,
+      "likes": 21
     },
     {
       "id": 7,
@@ -73,6 +78,7 @@ struct ForEachCase {
       "goods_img": "assets/8.webp",
       "goods_price": 178,
       "goods_count": 1,
+      "likes": 1102
     },
     {
       "id": 9,
@@ -87,17 +93,33 @@ struct ForEachCase {
       "goods_img": "assets/10.webp",
       "goods_price": 153,
       "goods_count": 1,
+      "likes": 77
     }
   ]
 
+  changeLike(goods: GoodsItem) {
+    if (goods.likeFlag) {
+      goods.likeFlag = false
+      goods.likes -= 1
+    } else {
+      goods.likeFlag = true
+      goods.likes += 1
+    }
+    //  State 数据只能监听到第一层的变化
+    //  怎么让数据具备驱动视图变化
+    const index = this.list.findIndex(item => item.id === goods.id)
+    // this.list[index] = {...goods} // 解构赋值的方式NEXT版本不行，仅4.0可以
+    this.list.splice( index , 1 ,goods)
+  }
+
   build() {
-    Stack({alignContent:Alignment.Bottom}){
+    Stack({ alignContent: Alignment.Bottom }) {
       Scroll() {
         // scroll 只能放置一个子组件
         List() {
           // 自带滚动条， 自伤乡下排列
           // ForEach( 数据源， 回调函数 => ArtUI , 生成key的函数)
-          ForEach(this.list, (goods: GoodsItem1, index) => {
+          ForEach(this.list, (goods: GoodsItem) => {
             ListItem() {
               Flex() {
                 Image(goods.goods_img)
@@ -109,10 +131,18 @@ struct ForEachCase {
                     .fontSize(14)
                     .fontColor('#333')
                   // Text(goods.goods_price + "")
-                  Text() {
-                    Span('￥')
-                    Span(goods.goods_price + "")
-                  }.fontColor(Color.Red)
+                  Row() {
+                    Text() {
+                      Span('￥')
+                      Span(goods.goods_price + "")
+                    }.fontColor(Color.Red)
+
+                    // 点赞部分
+                    LikeCom({ goods, changeLike: (goods: GoodsItem) => this.changeLike(goods) })
+
+                  }
+                  .width('100%')
+                  .justifyContent(FlexAlign.SpaceBetween)
                 }
                 .layoutWeight(1)
                 .margin({ left: 10 })
@@ -123,11 +153,24 @@ struct ForEachCase {
             }.padding(10)
           })
         }
-      }.padding({ bottom: 70 })
-      // 吸底
-      ReplayInput()
+      }
+      .width('100%')
+      .backgroundColor(Color.White)
     }
 
   }
 }
 
+@Component
+struct LikeCom {
+  goods: Partial<GoodsItem> = {}
+  changeLike: (params: GoodsItem) => void = () => {
+  }
+
+  build() {
+    Text(this.goods.likes ? `点赞：${this.goods.likes}` : '')
+      .fontColor(this.goods.likeFlag ? Color.Red : '#ddd')
+        // 给goods断言成GoodsItem，否则会报错
+      .onClick(() => this.changeLike(this.goods as GoodsItem))
+  }
+}

@@ -1,9 +1,6 @@
 {
   "src": [
-    "pages/Index",
-    "pages/Index2",
-    "pages/Index3",
-    "pages/LoadingCase",
+    "pages/StackDemo",
     "pages/ForEachCase"
   ]
 }

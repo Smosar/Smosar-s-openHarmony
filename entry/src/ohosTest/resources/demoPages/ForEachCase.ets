@@ -1,7 +1,5 @@
 // 商品类型
-import ReplayInput from '../components/ReplayInput'
-
-class GoodsItem1 {
+class GoodsItem {
   goods_name: string
   goods_price: number
   goods_img: string
@@ -15,9 +13,7 @@ struct ForEachCase {
   // 两种定义类型的方式
   // @State list:GoodsItem[] = []
   // @State list: Array<GoodsItem> = []
-  // TS 方法，Partial 后面跟泛型，表示所有属性都不是必传的
-  // @State li:Partial<GoodsItem> = {}
-  @State list: Array<GoodsItem1> = [
+  @State list: Array<GoodsItem> = [
     {
       "id": 1,
       "goods_name": "班俏BANQIAO超火ins潮卫衣女士2020秋季新款韩版宽松慵懒风薄款外套带帽上衣",
@@ -91,43 +87,35 @@ struct ForEachCase {
   ]
 
   build() {
-    Stack({alignContent:Alignment.Bottom}){
-      Scroll() {
-        // scroll 只能放置一个子组件
-        List() {
-          // 自带滚动条， 自伤乡下排列
-          // ForEach( 数据源， 回调函数 => ArtUI , 生成key的函数)
-          ForEach(this.list, (goods: GoodsItem1, index) => {
-            ListItem() {
-              Flex() {
-                Image(goods.goods_img)
-                  .width(100)
-                  .height(160)
-                  .borderRadius(10)
-                Column() {
-                  Text(goods.goods_name)
-                    .fontSize(14)
-                    .fontColor('#333')
-                  // Text(goods.goods_price + "")
-                  Text() {
-                    Span('￥')
-                    Span(goods.goods_price + "")
-                  }.fontColor(Color.Red)
-                }
-                .layoutWeight(1)
-                .margin({ left: 10 })
-                .height(160)
-                .justifyContent(FlexAlign.SpaceBetween)
-                .alignItems(HorizontalAlign.Start)
-              }
-            }.padding(10)
-          })
-        }
-      }.padding({ bottom: 70 })
-      // 吸底
-      ReplayInput()
+    List() {
+      // 自带滚动条， 自伤乡下排列
+      // ForEach( 数据源， 回调函数 => ArtUI , 生成key的函数)
+      ForEach(this.list, (goods: GoodsItem, index) => {
+        ListItem() {
+          Flex() {
+            Image(goods.goods_img)
+              .width(100)
+              .height(160)
+              .borderRadius(10)
+            Column() {
+              Text(goods.goods_name)
+                .fontSize(14)
+                .fontColor('#333')
+              // Text(goods.goods_price + "")
+              Text(){
+                Span('￥')
+                Span(goods.goods_price + "")
+              }.fontColor(Color.Red)
+            }
+            .layoutWeight(1)
+            .margin({ left: 10 })
+            .height(160)
+            .justifyContent(FlexAlign.SpaceBetween)
+            .alignItems(HorizontalAlign.Start)
+          }
+        }.padding(10)
+      })
     }
-
   }
 }
 
