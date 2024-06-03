@@ -1,7 +1,9 @@
 {
   "src": [
-    "pages/StackDemo",
-    "pages/ForEachCase",
-    "pages/ZhiHu"
+    "pages/02/StackDemo",
+    "pages/02/ForEachCase",
+    "pages/02/ZhiHu",
+    "pages/02/BuilderPage",
+    "pages/03/SlotDemo"
   ]
 }

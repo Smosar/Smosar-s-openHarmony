@@ -91,7 +91,7 @@ struct ForEachCase {
       // 自带滚动条， 自伤乡下排列
       // ForEach( 数据源， 回调函数 => ArtUI , 生成key的函数)
       ForEach(this.list, (goods: GoodsItem, index) => {
-        ListItem() {
+        ListItem({}) {
           Flex() {
             Image(goods.goods_img)
               .width(100)

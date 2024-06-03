@@ -1,8 +1,8 @@
 @Styles function myStyles() {
   .width(500)
   .height(300)
-
 }
+
 
 @Entry
 @Component
@@ -60,6 +60,8 @@ struct Index2 {
               .border({ width: 0 })
             }
           })
+
+
         /*
         * focused : 获取态
         * normal：正常态
@@ -72,6 +74,15 @@ struct Index2 {
             focused: this.pressedSty
           })
           .onClick(() => this.isEnabled = !this.isEnabled)
+
+        Button('dddd')
+          .stateStyles({
+            disabled:{
+              .backgroundColor('#ddd')
+            },
+            pressed:{ .backgroundColor('#333')},
+            normal:{ .backgroundColor('#f3f3f3')}
+          })
 
         Button('不可用态')
           .btnStyle3()

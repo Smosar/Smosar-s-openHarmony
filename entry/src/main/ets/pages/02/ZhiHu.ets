@@ -1,4 +1,4 @@
-export class ReplyItem {
+class ReplyItem {
   id: number = 0
   avatar: string | Resource = ""
   author: string = ""
@@ -108,6 +108,7 @@ struct ZhiHu {
           // 分割线
           Divider()
             .strokeWidth(6)
+            // .color("green")
             .color("#f4f5f6")
           ForEach(this.commentList, (item: ReplyItem) => {
             CommentItem({ item, changeLike: item => {
@@ -208,13 +209,13 @@ struct ReplyInput {
         })
         .onClick(() => {
           console.info('输入框信息', this.commentStr)
-          if(this.commentStr){
+          if (this.commentStr) {
             this.addComment({
               id: Date.now(),
               avatar: "",
               author: "Smosar",
               content: this.commentStr,
-              time: `${new Date().getMonth() + 1 }-${new Date().getDate()}`,
+              time: `${new Date().getMonth() + 1}-${new Date().getDate()}`,
               area: "",
               likeNum: 111
             })

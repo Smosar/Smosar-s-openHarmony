@@ -18,8 +18,6 @@
 struct Index {
   @State message: string = 'Hello World'
 
-
-
   build() {
     Row() {
       Column() {
@@ -31,10 +29,10 @@ struct Index {
           .margin({ bottom: 20 })
         Button('继承属性Extend')
           .btnStyle2()
-
       }
       .width('100%')
     }
     .height('100%')
   }
 }
+

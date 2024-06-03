@@ -1,5 +1,5 @@
 // 商品类型
-import ReplayInput from '../components/ReplayInput'
+import ReplayInput from '../../components/ReplayInput'
 
 class GoodsItem1 {
   goods_name: string
