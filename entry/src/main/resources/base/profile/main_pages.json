@@ -4,6 +4,8 @@
     "pages/02/ForEachCase",
     "pages/02/ZhiHu",
     "pages/02/BuilderPage",
-    "pages/03/SlotDemo"
+    "pages/03/SlotDemo",
+    "pages/03/PropCase",
+    "pages/03/LinkCase"
   ]
 }
